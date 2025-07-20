@@ -42,6 +42,7 @@ sudo update-alternatives --install /usr/bin/editor editor "/opt/nvim-linux-x86_6
 sudo update-alternatives --set editor "/opt/nvim-linux-x86_64/bin/nvim"
 # requirement for neovim
 sudo apt install ripgrep
+sudo apt install xclip # to access the system's clipboard
 
 # install fzf to fuzzy-find in the command line
 sudo apt install fzf
