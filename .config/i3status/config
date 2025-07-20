@@ -1,0 +1,94 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+	output_format = "i3bar"
+        colors = true
+	color_good = "#06c993" # green
+	color_bad = "#f561ab" # red
+	color_degraded = "#ffa500" # orange
+        interval = 5
+}
+
+# Remove wireless and ethernet information as it is already present in icons from Linux Mint
+#order += "wireless _first_"
+#order += "ethernet _first_"
+order += "battery 0"
+order += "volume master"
+# Cannot seem to extract the temperature from the CPUs, however with 'cpu_usage' I get similar information
+#order += "cpu_temperature 0"
+order += "memory"
+order += "disk /"
+order += "tztime local"
+order += "cpu_usage"
+
+# Only displays CPU usage if the CPU is under a lot of load to avoid having unnecessary information floating around
+cpu_usage {
+	format = ""
+	degraded_threshold = 70
+	format_above_degraded_threshold = " CPU > %usage "
+	max_threshold = 90
+	format_above_threshold = " CPU > %usage "
+}
+
+wireless _first_ {
+  #format_up = "Wifi %quality @ %essid, %bitrate" 
+  format_up = " Wifi %essid "
+  format_down = " Wifi down "
+}
+
+ethernet _first_ {
+        #format_up = "E: %ip (%speed)"
+        format_up = " Ethernet up "
+        format_down = ""
+}
+
+battery 0 {
+  #format = "%status %percentage %remaining %emptytime"
+  format = " %status %percentage "
+  format_down = "No battery"
+  status_chr = "⚡"
+  status_bat = "🪫"
+  status_unk = "?"
+  status_full = "🔋"
+  path = "/sys/class/power_supply/BAT%d/uevent"
+  low_threshold = 10
+  integer_battery_capacity = true
+}
+
+# Only displays disk usage if the disk is almost full to avoid having unnecesary information floating around
+disk "/" {
+        #format = "%avail"
+        format = ""
+	low_threshold = 10
+	format_below_threshold = " DISK < %avail "
+}
+
+# Does not work for me ...
+cpu_temperature 0 {
+	format = ""
+	path = /sys/devices/platform/coretemp.0/temp1_input
+}
+
+# Only displays RAM usage if the RAM is almost all used to avoid having unnecessary information floating around
+memory {
+        #format = "%used | %available"
+        format = ""
+        threshold_degraded = "2G"
+        format_degraded = "RAM < %available"
+}
+
+tztime local {
+        format = " %Y-%m-%d %H:%M:%S "
+}
+
+volume master {
+	format = " 🔊 %volume "
+	format_muted = " 🔈 %volume "
+	device = "pulse:alsa_output.pci-0000_00_1f.3.analog-stereo"
+}
