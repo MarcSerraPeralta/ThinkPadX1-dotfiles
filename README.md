@@ -34,6 +34,9 @@ sudo chmod +x /usr/local/bin/greenclip
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+
+# install fzf to fuzzy-find in the command line
+sudo apt install fzf
 ```
 
 # Choice explanation
