@@ -46,6 +46,10 @@ sudo apt install xclip # to access the system's clipboard
 
 # install fzf to fuzzy-find in the command line
 sudo apt install fzf
+
+# requirements for the script to lock the screen with i3lock
+sudo apt install scrot
+chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
 ```
 
 # Choice explanation
