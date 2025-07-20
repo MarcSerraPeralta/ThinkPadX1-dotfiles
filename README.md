@@ -40,9 +40,16 @@ sudo update-alternatives --set vim "/opt/nvim-linux-x86_64/bin/nvim"
 # set neovim as default editor
 sudo update-alternatives --install /usr/bin/editor editor "/opt/nvim-linux-x86_64/bin/nvim" 100
 sudo update-alternatives --set editor "/opt/nvim-linux-x86_64/bin/nvim"
+# requirement for neovim
+sudo apt install ripgrep
+sudo apt install xclip # to access the system's clipboard
 
 # install fzf to fuzzy-find in the command line
 sudo apt install fzf
+
+# requirements for the script to lock the screen with i3lock
+sudo apt install scrot
+chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
 ```
 
 # Choice explanation
