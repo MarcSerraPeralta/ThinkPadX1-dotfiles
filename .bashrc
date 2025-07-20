@@ -56,8 +56,22 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# disable python virtual environment overwriting the PS1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+function set_virtualenv () {
+  if test -z "$VIRTUAL_ENV" ; then
+      PYTHON_VIRTUALENV=""
+  else
+      PYTHON_VIRTUALENV="(`basename \"$VIRTUAL_ENV\"`) "
+  fi
+}
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # Tell bash to execute this function just before displaying its prompt.
+    PROMPT_COMMAND=set_virtualenv
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\w\[\033[00m\] \[\033[01;34m\]${PYTHON_VIRTUALENV}\[\033[00m\]'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
