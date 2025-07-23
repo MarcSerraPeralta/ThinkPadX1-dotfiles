@@ -14,7 +14,7 @@ lxappearance # opens GUI and then it can be changed there manually
 sudo apt install brightnessctl
 sudo usermod -aG video $USER
 sudo usermod -aG input $USER
-# requires restarting the computer!
+REBOOT=true # for this action to take place, it requires a reboot
 
 # package used to set up a wallpaper
 sudo apt install feh
@@ -50,6 +50,10 @@ sudo apt install fzf
 # requirements for the script to lock the screen with i3lock
 sudo apt install scrot
 chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
+
+if [ REBOOT ]; then
+  sudo reboot
+fi
 ```
 
 # Choice explanation
