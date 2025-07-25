@@ -11,6 +11,10 @@ chmod +x $HOME/setup_script.sh
 bash $HOME/setup_script.sh
 ```
 
+Open Cinnamon settings (or run `cinnamon-settings`) and change the Power Management as you wish. My configuration is that closing the lid only locks the screen to avoid broken connections to clusters through ssh and simulations being stopped. 
+
+*Note: IDK why but I didn't have any Power Manager, so I had to run `sudo apt install xfce4-power-manager`.*
+
 # Choice explanation
 
 Most of my choices are based on the setup from ThePrimagen (e.g. see [this video](https://www.youtube.com/watch?v=bdumjiHabhQ&t=316s)). 
