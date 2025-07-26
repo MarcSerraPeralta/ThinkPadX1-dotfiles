@@ -39,3 +39,6 @@ vim.opt.updatetime = 50
 
 -- add line at 80 characters
 vim.opt.colorcolumn = "80"
+
+-- specify system clipboard to copy to that
+vim.opt.clipboard = "unnamedplus"
