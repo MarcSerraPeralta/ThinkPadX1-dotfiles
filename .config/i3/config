@@ -27,6 +27,9 @@ exec --no-startup-id dex --autostart --environment i3
 # they are included here as an example. Modify as you see fit.
 bindsym $mod+x exec --no-startup-id ~/.config/i3lock/locking_script.sh
 
+# The Ctrl+Alt+End keybind to shutdown the computer does not seem to work on my Cinnamon
+bindsym Control+Mod1+End exec --no-startup-id shutdown -h now
+
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
