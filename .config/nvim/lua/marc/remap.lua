@@ -1,4 +1,7 @@
 vim.g.mapleader = " "
+vim.g.maplocalleader = "\\" -- needed for lazy.nvim
+
+-- enter Ex mode (file/directory edition commands)
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- move selected lines up and down in visual mode
