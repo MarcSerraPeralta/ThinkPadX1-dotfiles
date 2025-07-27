@@ -5,3 +5,6 @@ require("marc.lazy_init") -- needs to be loaded after remap because it contains 
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
+
+-- set colorscheme from the ones described in lazy
+vim.cmd[[colorscheme tokyonight]]
