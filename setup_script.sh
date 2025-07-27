@@ -46,6 +46,17 @@ sudo apt install fzf
 sudo apt install scrot
 chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
 
+# requirements for neovim-tree-sitter: tree-sitter-cli
+wget https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz
+gunzip tree-sitter-linux-x64.gz
+chmod +x tree-sitter-linux-x64
+mv tree-sitter-linux-x64 ~/.local/bin/tree-sitter
+# requirements for neovim-tree-sitter: nodejs
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+\. "$HOME/.nvm/nvm.sh" # in lieu of restarting the shell
+nvm install 22 # Download and install Node.js:
+
 if [ REBOOT ]; then
   sudo reboot
 fi
