@@ -38,6 +38,8 @@ sudo update-alternatives --set editor "/opt/nvim-linux-x86_64/bin/nvim"
 # requirement for neovim
 sudo apt install ripgrep
 sudo apt install xclip # to access the system's clipboard
+# install the LSPs
+npm install -g basedpyright
 
 # install fzf to fuzzy-find in the command line
 sudo apt install fzf
