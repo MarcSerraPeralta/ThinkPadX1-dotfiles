@@ -40,14 +40,6 @@ sudo apt install ripgrep
 sudo apt install xclip # to access the system's clipboard
 # install the LSPs
 npm install -g basedpyright
-
-# install fzf to fuzzy-find in the command line
-sudo apt install fzf
-
-# requirements for the script to lock the screen with i3lock
-sudo apt install scrot
-chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
-
 # requirements for neovim-tree-sitter: tree-sitter-cli
 wget https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz
 gunzip tree-sitter-linux-x64.gz
@@ -58,6 +50,16 @@ mv tree-sitter-linux-x64 ~/.local/bin/tree-sitter
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 \. "$HOME/.nvm/nvm.sh" # in lieu of restarting the shell
 nvm install 22 # Download and install Node.js:
+# requirements for python LSP
+python3 -m pip install ruff ruff-lsp
+
+# install fzf to fuzzy-find in the command line
+sudo apt install fzf
+
+# requirements for the script to lock the screen with i3lock
+sudo apt install scrot
+chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
+
 
 if [ REBOOT ]; then
   sudo reboot
