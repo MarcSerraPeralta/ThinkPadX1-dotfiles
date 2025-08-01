@@ -11,7 +11,19 @@ return {
         require('telescope').setup({})
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
+        vim.keymap.set('n', '<leader>pf', function()
+            require('telescope.builtin').find_files({
+                find_command = {
+                    "rg",
+                    "--files",
+                    "--hidden",
+                    "--no-ignore",
+                    "--follow",
+                    "--glob", "!.git/*"
+                },
+            })
+            end, { desc = "Find files (dotfiles included, .git excluded)" }
+        )
         vim.keymap.set('n', '<C-p>', builtin.git_files, {})
         -- grep current word under cursor (no spaces)
         vim.keymap.set('n', '<leader>pws', function()
