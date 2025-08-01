@@ -143,3 +143,22 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "/home/marc/.deno/env"
+
+# simple command to activate the venvs
+activate() {
+    VENV_BASE="$HOME/virtual_environments"  
+    VENV_PATH="$VENV_BASE/$1"
+
+    if [ -z "$1" ]; then
+        echo "Usage: activate <env_name>"
+        return 1
+    fi
+
+    if [ -f "$VENV_PATH/bin/activate" ]; then
+        source "$VENV_PATH/bin/activate"
+    else
+        echo "Virtual environment '$1' not found in $VENV_BASE"
+        return 1
+    fi
+}
