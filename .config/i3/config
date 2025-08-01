@@ -64,6 +64,10 @@ floating_modifier $mod
 # Wallpaper
 exec --no-startup-id feh --bg-scale ~/.config/backgrounds/dark_macos_style.jpg
 
+# neovim peek plugin (markdown preview).
+# do not focus the preview window when it opens
+no_focus [title="^Peek preview$"]
+
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 

@@ -50,8 +50,13 @@ mv tree-sitter-linux-x64 ~/.local/bin/tree-sitter
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 \. "$HOME/.nvm/nvm.sh" # in lieu of restarting the shell
 nvm install 22 # Download and install Node.js:
+# requirements for neovim-tree-sitter: fd
+sudo apt install fd-find
+ln -s $(which fdfind) ~/.local/bin/fd
 # requirements for python LSP
 python3 -m pip install ruff ruff-lsp
+# requirements for peek.nvim (live preview of Markdown files): deno
+curl -fsSL https://deno.land/install.sh | sh
 
 # install fzf to fuzzy-find in the command line
 sudo apt install fzf
