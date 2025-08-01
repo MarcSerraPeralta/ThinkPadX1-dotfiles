@@ -69,27 +69,33 @@ return {
             severity_sort = true,
         })
 
-        -- configure keymaps
-        -- -- display full information of the diagnostics in the current line
-        -- -- and close the information in a floating window when pressing any key
-        local function close_floating()
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-                local config = vim.api.nvim_win_get_config(win)
-                if config.relative ~= "" then
-                    vim.api.nvim_win_close(win, false)
-                end
-            end
-        end
-
+        -- show diagnosis for current line.
+        -- the function is quite long because I want the floating window to
+        -- close when typing <Esc> (the default close action is with cursor movement)
         vim.keymap.set("n", "<leader>d", function()
-            vim.diagnostic.open_float(nil, { scope = "line", border = "rounded" })
-            local ns = vim.api.nvim_create_namespace("diag_float_temp")
+            local line_diagnostics = vim.diagnostic.get(0, 
+                { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 }
+            )
+
+            if vim.tbl_isempty(line_diagnostics) then
+                return  -- no diagnostics, don't open anything
+            end
+
+            local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
+                focusable = false,
+                scope = "line",
+                border = "rounded",
+            })
+
+            local ns = vim.api.nvim_create_namespace("diag_float_auto_close")
+
             vim.on_key(function()
-                close_floating()
-                vim.on_key(nil, ns)
+                if vim.api.nvim_win_is_valid(float_winnr) then
+                    vim.api.nvim_win_close(float_winnr, false)
+                end
+                vim.on_key(nil, ns) -- clear key listener
             end, ns)
-            end, { desc = "Show diagnostics and close on keypress" }
-        )
+        end, { desc = "Show diagnostics and close on key press" })
 
         -- -- format the selected lines
         vim.keymap.set("v", "<Leader>ff", function()
