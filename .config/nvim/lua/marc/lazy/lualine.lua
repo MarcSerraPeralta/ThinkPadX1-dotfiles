@@ -11,7 +11,7 @@ return {
             lualine_b = {{
                 'filename',
                 path = 1,  -- 0 = just filename, 1 = relative path, 2 = absolute path
-                symbols = { modified = ' ●', readonly = ' 🔒', unnamed = '[No Name]' },
+                symbols = { modified = ' ●', readonly = '', unnamed = '' },
             }},
             lualine_c = {},
             lualine_x = {},
@@ -24,7 +24,7 @@ return {
             lualine_c = {{
                 'filename',
                 path = 1,
-                symbols = { modified = ' ●', readonly = ' 🔒', unnamed = '[No Name]' },
+                symbols = { modified = ' ●', readonly = '', unnamed = '' },
             }},
             lualine_x = {},
             lualine_y = {},
