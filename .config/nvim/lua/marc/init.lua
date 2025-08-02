@@ -8,3 +8,6 @@ vim.g.loaded_node_provider = 0
 
 -- set colorscheme from the ones described in lazy
 vim.cmd[[colorscheme tokyonight]]
+-- change context line color (needs to be done after loading colorscheme to avoid overwritting)
+vim.cmd.highlight("TreesitterContext guibg=#2e3347") 
+vim.cmd.highlight("TreesitterContextLineNumber guibg=#2e3347")  
