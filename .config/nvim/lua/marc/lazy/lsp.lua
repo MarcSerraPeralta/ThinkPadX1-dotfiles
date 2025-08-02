@@ -18,7 +18,10 @@ return {
             settings = {
                 basedpyright = {
                     typeCheckingMode = "recommended",
-                    analysis = {exclude = { "**/*.ipynb" }},
+                    analysis = {
+                        exclude = { "**/*.ipynb" },
+                        diagnosticMode = "workspace", -- scans the whole workspace
+                    },
                 },
             },
         })

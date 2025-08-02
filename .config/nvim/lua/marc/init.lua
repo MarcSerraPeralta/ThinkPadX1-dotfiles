@@ -14,9 +14,39 @@ vim.cmd.highlight("TreesitterContext guibg=#2e3347")
 vim.cmd.highlight("TreesitterContextLineNumber guibg=#2e3347")  
 
 -- set round borders across all diagnostics
-vim.diagnostic.config({
-  float = { border = "rounded" },
-})
+vim.diagnostic.config({ float = { border = "rounded" } })
+
+-- be able to close the diagnostic floating windows by pressing Esc
+local ns = vim.api.nvim_create_namespace("global_diag_float_close")
+local orig_open_float = vim.diagnostic.open_float
+local diag_win = nil
+vim.diagnostic.open_float = function(bufnr, opts)
+  -- Close existing float if valid
+  if diag_win and vim.api.nvim_win_is_valid(diag_win) then
+    vim.api.nvim_win_close(diag_win, false)
+    diag_win = nil
+    vim.on_key(nil, ns)
+  end
+
+  opts = opts or {}
+  opts.border = opts.border or "rounded"
+
+  local float_buf, win = orig_open_float(bufnr, opts)
+  diag_win = win
+
+  -- Auto-close on <Esc>
+  vim.on_key(function(key)
+    if key == vim.api.nvim_replace_termcodes("<Esc>", true, false, true) then
+      if diag_win and vim.api.nvim_win_is_valid(diag_win) then
+        vim.api.nvim_win_close(diag_win, false)
+      end
+      diag_win = nil
+      vim.on_key(nil, ns)
+    end
+  end, ns)
+
+  return float_buf, win
+end
 
 -- load keymaps for LSP only after LSP is attached
 local MarcGroup = vim.api.nvim_create_augroup('Marc', {})
@@ -33,44 +63,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("i", "<leader>vh", function() vim.lsp.buf.signature_help() end, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-        -- show diagnosis for current line.
-        -- the function is quite long because I want the floating window to
-        -- close when typing <Esc> (the default close action is with cursor movement)
-        vim.keymap.set("n", "<leader>d", function()
-            local line_diagnostics = vim.diagnostic.get(0, 
-                { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 }
-            )
-
-            if vim.tbl_isempty(line_diagnostics) then
-                return  -- no diagnostics, don't open anything
-            end
-
-            local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
-                focusable = false,
-                scope = "line",
-                border = "rounded",
-            })
-
-            local ns = vim.api.nvim_create_namespace("diag_float_auto_close")
-
-            vim.on_key(function()
-                if vim.api.nvim_win_is_valid(float_winnr) then
-                    vim.api.nvim_win_close(float_winnr, false)
-                end
-                vim.on_key(nil, ns) -- clear key listener
-            end, ns)
-        end, { desc = "Show diagnostics and close on key press" })
-        -- -- format the selected lines
+        vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float(nil, {
+            focusable = false, scope = "line",
+            }) end, {desc = "Show diagnostics for the current line" })
         vim.keymap.set("v", "<Leader>ff", function()
             vim.lsp.buf.format({ range = {
                 ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
                 ["end"]   = vim.api.nvim_buf_get_mark(0, ">"),
             }})
-            end, { desc = "Format selected lines with LSP" }
-        )
+            end, { desc = "Format selected lines with LSP" })
         vim.keymap.set("n", "<leader>ff", function()
             vim.lsp.buf.format({})
-            end, { desc = "Format entire file with LSP" }
-        )
+            end, { desc = "Format entire file with LSP" })
+        vim.keymap.set("n", "<leader>xx", function()
+            require("telescope.builtin").diagnostics({ bufnr = nil })
+            end, { desc = "Show all diagnostics (Telescope)" })
+
     end
 })
