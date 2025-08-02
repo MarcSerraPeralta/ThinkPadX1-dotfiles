@@ -13,6 +13,11 @@ vim.cmd[[colorscheme tokyonight]]
 vim.cmd.highlight("TreesitterContext guibg=#2e3347") 
 vim.cmd.highlight("TreesitterContextLineNumber guibg=#2e3347")  
 
+-- file explorer
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
+
 -- avoid vim adding comment symbols when creating new line from commented line
 vim.opt.formatoptions:remove({ "o", "r" })
 
