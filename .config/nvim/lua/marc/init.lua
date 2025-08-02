@@ -13,6 +13,9 @@ vim.cmd[[colorscheme tokyonight]]
 vim.cmd.highlight("TreesitterContext guibg=#2e3347") 
 vim.cmd.highlight("TreesitterContextLineNumber guibg=#2e3347")  
 
+-- avoid vim adding comment symbols when creating new line from commented line
+vim.opt.formatoptions:remove({ "o", "r" })
+
 -- set round borders across all diagnostics
 vim.diagnostic.config({ float = { border = "rounded" } })
 
