@@ -1,6 +1,8 @@
+# My config for my ThinkPad X1 Yoga
+
 Config files for Linux Mint 21.3 x86_64 with `i3` as window manager and `tmux` as a "terminal manager". 
 
-To set up the configuration in this repo in a Linux Mint Cinnamon computer, run the following commands:
+To set up the configuration in this repo in a Linux Mint Cinnamon computer, run the following commands (and check the comments below):
 ```
 git clone --bare <git-repo-url> $HOME/.dotfiles
 alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
@@ -11,13 +13,17 @@ chmod +x $HOME/setup_script.sh
 bash $HOME/setup_script.sh
 ```
 
-Open Cinnamon settings (or run `cinnamon-settings`) and change the Power Management as you wish. My configuration is that closing the lid only locks the screen to avoid broken connections to clusters through ssh and simulations being stopped. 
+**1.** Open Cinnamon settings (or run `cinnamon-settings`) and change the Power Management as you wish. 
+My configuration is that closing the lid only locks the screen to avoid broken connections to clusters through ssh and simulations being stopped. 
 
 *Note: IDK why but I didn't have any Power Manager, so I had to run `sudo apt install xfce4-power-manager`.*
 
+**2.** Ensure that the screen gets locked after going into sleep mode (for security purposes). 
+In Cinnamon, this is configured in Cinnamon settings (which can be open by running `cinnamon-settings`).
+
 # Choice explanation
 
-Most of my choices are based on the setup from ThePrimagen (e.g. see [this video](https://www.youtube.com/watch?v=bdumjiHabhQ&t=316s)). 
+Most of my choices are based on the setup from ThePrimeagen (e.g. see [this video](https://www.youtube.com/watch?v=bdumjiHabhQ&t=316s)). 
 
 ## Main setup
 
