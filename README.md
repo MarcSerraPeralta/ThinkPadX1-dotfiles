@@ -21,6 +21,12 @@ My configuration is that closing the lid only locks the screen to avoid broken c
 **2.** Ensure that the screen gets locked after going into sleep mode (for security purposes). 
 In Cinnamon, this is configured in Cinnamon settings (which can be open by running `cinnamon-settings`).
 
+**3.** Install a nerd font so that the icons in Neovim are displayed correctly. 
+I am using [this Ubuntu Mono font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/UbuntuMono.zip).
+Neovim uses the font from the terminal, so one just needs to change that (Terminal > Preferences > Font). 
+If the newly installed font does not show up in the terminal as option, close all terminal windows to restart the terminal.
+If the issue still persists, maybe install the font system wide, check using `fc-list :spacing=mono` the available monospaced fonts, restart the cache with `fc-cache -fv`...
+
 # Choice explanation
 
 Most of my choices are based on the setup from ThePrimeagen (e.g. see [this video](https://www.youtube.com/watch?v=bdumjiHabhQ&t=316s)). 
