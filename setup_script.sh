@@ -76,6 +76,8 @@ sudo apt install xss-lock
 sudo apt install scrot
 chmod +x .config/i3lock/locking_script.sh # one needs to fetch the dotfiles repository first!
 
+# install tmux
+sudo apt install tmux
 
 if [ REBOOT ]; then
   sudo reboot
