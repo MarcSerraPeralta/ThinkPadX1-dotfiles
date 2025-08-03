@@ -2,7 +2,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- load lsp only when loading files (faster)
     dependencies = {
-        "ray-x/lsp_signature.nvim", -- shows the signature of functions while typing
+        -- "ray-x/lsp_signature.nvim", -- shows the signature of functions while typing
         "hrsh7th/nvim-cmp", -- autocompletion
         "hrsh7th/cmp-nvim-lsp", -- enable LSP <-> cmp communication
         -- "L3MON4D3/LuaSnip", -- snippets = templates for functions, classes...
@@ -25,12 +25,6 @@ return {
                 },
             },
         })
-
-        -- show function signatures while typing
-        require("lsp_signature").setup({
-            hint_enable = false,      -- disable inline hints for a cleaner look
-            timer_interval = 50,     -- faster update rate (default: 200ms)
-          })
 
         -- autocompletion based on the LSP
         local cmp = require("cmp")

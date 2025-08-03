@@ -57,6 +57,16 @@ ln -s $(which fdfind) ~/.local/bin/fd
 python3 -m pip install ruff ruff-lsp
 # requirements for peek.nvim (live preview of Markdown files): deno
 curl -fsSL https://deno.land/install.sh | sh
+# requirements for nvim-dap-python (debugger)
+export PWD=$(pwd)
+mkdir ~/virtual_environments
+cd ~/virtual_environments
+python3 -m pip install virtualenv
+virtualenv debugpy --python=$(which python3)
+source debugpy/bin/activate
+python -m pip install debugpy
+deactivate
+cd $PWD
 
 # install fzf to fuzzy-find in the command line
 sudo apt install fzf
