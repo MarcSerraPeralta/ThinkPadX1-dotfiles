@@ -157,12 +157,21 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# open terminal and firefox always in fullscreen mode
+for_window [class="Gnome-terminal"] fullscreen enable
+for_window [class="firefox"] fullscreen enable
+
 # launch applications on specific workspaces on startup
-# # launch terminal with tmux on workspace 1 in full screen (sleep to wait until the terminal is open)
-exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal --title="StartupTerm" -- bash -c "tmux"'
-exec --no-startup-id sh -c 'sleep 1 && i3-msg [title="^StartupTerm$"] fullscreen enable' 
-# # launch firefox on workspace 2
+# # launch terminal with tmux on workspace 1 
+exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal -- bash -c "tmux"'
+# # launch firefox on workspace 2 in full screen (sleep to wait until the terminal is open)
 exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/firefox'
+exec --no-startup-id sh -c 'sleep 0.1 && i3-msg "workspace 1"'
+#exec_always --no-startup-id sh -c 'sleep 1.500 && i3-msg [title="^StartupTerm$"] fullscreen enable' 
+#exec_always --no-startup-id sh -c 'sleep 2.990 && i3-msg "workspace 2"'
+#exec_always --no-startup-id sh -c 'sleep 3.000 && i3-msg "[class=\\"firefox\\"] fullscreen enable"'
+# # move focus to the terminal window in workspace 1
+#exec_always --no-startup-id sh -c 'sleep 3.010 && i3-msg "workspace 1"'
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
