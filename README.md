@@ -37,7 +37,8 @@ If the issue still persists, maybe install the font system wide, check using `fc
 ```
 with `/home/marc/` substituted for your home path. 
 This means that the battery-notification script will run every 3 minutes. 
-The reason for not using `$HOME` is that cron may not have all the environment variables loaded up.
+The reason for not using `$HOME` is that cron does not have all the environment variables loaded up. 
+For this reason, you must also check the `battery_notifications` script and update any environment variables present there.
 
 # Choice explanation
 
