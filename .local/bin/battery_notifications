@@ -1,0 +1,42 @@
+#!/bin/bash
+
+LOCKFILE_WARNING="/tmp/battery-low-warning.lock"
+LOCKFILE_CRITICAL="/tmp/battery-low-critical.lock"
+BATTERY_CAPACITY_FILE="/sys/class/power_supply/BAT0/capacity"
+WARNING_THRESHOLD=25
+CRITICAL_THRESHOLD=10
+COOLDOWN_WARNING=1740   # 29 minutes
+COOLDOWN_CRITICAL=240   # 4 minutes
+
+if [ ! -f "$BATTERY_CAPACITY_FILE" ]; then
+    notify-send "🔴 CRITICAL BATTERY" "Cannot detect battery capacity level!" -u critical
+    exit 1
+fi
+
+battery_level=$(cat "$BATTERY_CAPACITY_FILE")
+now=$(date +%s)
+
+if [ "$battery_level" -lt "$CRITICAL_THRESHOLD" ]; then
+    if [ -f "$LOCKFILE_CRITICAL" ]; then
+        last=$(cat "$LOCKFILE_CRITICAL")
+        elapsed=$(( now - last ))
+        if [ $elapsed -lt $COOLDOWN_CRITICAL ]; then
+            exit 0  # Still in critical cooldown
+        fi
+    fi
+    notify-send "🔴 CRITICAL BATTERY" "Battery critically low: ${battery_level}%! Plug in NOW!" -u critical
+    echo "$now" > "$LOCKFILE_CRITICAL"
+    # Also clear warning lock so it doesn't interfere later
+    [ -f "$LOCKFILE_WARNING" ] && rm "$LOCKFILE_WARNING"
+
+elif [ "$battery_level" -lt "$WARNING_THRESHOLD" ]; then
+    if [ -f "$LOCKFILE_WARNING" ]; then
+        last=$(cat "$LOCKFILE_WARNING")
+        elapsed=$(( now - last ))
+        if [ $elapsed -lt $COOLDOWN_WARNING ]; then
+            exit 0  # Still in warning cooldown
+        fi
+    fi
+    notify-send "⚠️ Low Battery" "Battery is at ${battery_level}%! Please plug in your charger."
+    echo "$now" > "$LOCKFILE_WARNING"
+fi

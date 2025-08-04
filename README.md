@@ -4,13 +4,17 @@ Config files for Linux Mint 21.3 x86_64 with `i3` as window manager and `tmux` a
 
 To set up the configuration in this repo in a Linux Mint Cinnamon computer, run the following commands (and check the comments below):
 ```
+wget https://raw.githubusercontent.com/MarcSerraPeralta/ThinkPadX1-dotfiles/refs/heads/master/pre_setup_script.sh
+chmod +x pre_setup_script.sh
+bash pre_setup_script.sh
+
 git clone --bare <git-repo-url> $HOME/.dotfiles
 alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 dotfiles checkout
 dotfiles config --local status.showUntrackedFiles no
 
-chmod +x $HOME/setup_script.sh
-bash $HOME/setup_script.sh
+chmod +x post_setup_script.sh
+bash post_setup_script.sh
 ```
 
 **1.** Open Cinnamon settings (or run `cinnamon-settings`) and change the Power Management as you wish. 
@@ -26,6 +30,14 @@ I am using [this Ubuntu Mono font](https://github.com/ryanoasis/nerd-fonts/relea
 Neovim uses the font from the terminal, so one just needs to change that (Terminal > Preferences > Font). 
 If the newly installed font does not show up in the terminal as option, close all terminal windows to restart the terminal.
 If the issue still persists, maybe install the font system wide, check using `fc-list :spacing=mono` the available monospaced fonts, restart the cache with `fc-cache -fv`...
+
+**4.** Set up the battery notifications using cron. Run `crontab -e` and then add to the end of the file:
+```
+*/3 * * * * /home/marc/.local/bin/battery_notifications
+```
+with `/home/marc/` substituted for your home path. 
+This means that the battery-notification script will run every 3 minutes. 
+The reason for not using `$HOME` is that cron may not have all the environment variables loaded up.
 
 # Choice explanation
 
