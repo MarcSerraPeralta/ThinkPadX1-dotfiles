@@ -157,6 +157,11 @@ activate() {
 
     if [ -f "$VENV_PATH/bin/activate" ]; then
         source "$VENV_PATH/bin/activate"
+        # check if tmux is running and if so store the VIRTUAL_ENV variable to the current window.
+        # see the comments in .tmux.conf for more information about this choice.
+        if ! [[ -z $TMUX ]]; then
+            tmux set-window-option @virtual_env "$VENV_PATH"
+        fi
     else
         echo "Virtual environment '$1' not found in $VENV_BASE"
         return 1
