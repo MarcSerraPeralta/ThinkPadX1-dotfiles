@@ -1,0 +1,200 @@
+#!/usr/bin/bash
+
+# custom parameters 
+# # harpoon paths specify which project is loaded when 'mode = session', and
+# # harpoon venvs specify which virtual environment to load (if needed).
+# # items must be separated by spaces.
+export HARPOON_PATHS=("$HOME/usuari/repositories/surface-sim" "$HOME")
+export HARPOON_VENVS=("surface-sim" "")
+# # fzf paths specify which directories to search for projects, and 
+# # fzf depths specify the depth shown in the fzf.
+# # items must be separated by spaces.
+export FZF_PATHS=("$HOME/usuari/repositories" "$HOME/usuari/projects")
+export FZF_DEPTHS=(1 1)
+
+# initial checks
+# # check that fzf and tmux are installed
+command -v fzf >/dev/null || echo "Error: fzf command is missing"
+command -v tmux >/dev/null || echo "Error: tmux command is missing"
+
+# # check that HARPOON_PATHS and HARPOON_VENVS have the same lenght
+if [[ ${#HARPOON_PATHS[@]} -ne ${#HARPOON_VENVS[@]} ]]; then
+    echo "Error: Harpoon arrays have different lengths."
+    exit 1
+fi
+
+# # check that FZF_PATHS and FZF_DEPTHS have the same lenght
+if [[ ${#FZF_PATHS[@]} -ne ${#FZF_DEPTHS[@]} ]]; then
+    echo "Error: Fzf arrays have different lengths."
+    exit 1
+fi
+
+# process the given inputs/arguments to my-tmux-sessionizer
+mode=""
+session_idx=""
+window_idx=""
+kill=""
+
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+    -h | --help)
+        echo "Usage: my-tmux-sessionizer [OPTIONS]"
+        echo "Options:"
+        echo "  -h, --help             Display this help message."
+        echo "  -m, --mode <name>      Mode to execute this program."
+        echo "                         Available modes are: 'fzf', 'session', 'window'."
+        echo "  -s, --session <name>   Session command index."
+        echo "  -w, --window <name>    Window command index." 
+        echo "  -k, --kill-window      Kills window where this program was called."
+        exit 0
+        ;;
+
+    -m | --mode)
+        mode="$2"
+        shift # shifts arguments $2 -> $1, $3 -> $2, ...
+        if [[ -z $mode ]]; then
+            echo "Error: Mode option cannot be empty."
+            exit 1
+        fi
+        if ! [[ "$mode"=="fzf" || "$mode"=="session" || "$mode"=="window" ]]; then
+            echo "Error: Mode option must be 'fzf', 'session', or 'window'."
+            exit 1
+        fi
+        ;;
+
+    -s | --session)
+        session_idx="$2"
+        shift # shifts arguments $2 -> $1, $3 -> $2, ...
+        if [[ -z "$session_idx" || "$session_idx" -lt 0 || "$session_idx" -ge "${#HARPOON_PATHS[@]}" ]]; then
+            echo "Error: Invalid session index. Please provide an index between 0 and $((${#HARPOON_PATHS[@]} - 1))."
+            exit 1
+        fi
+        ;;
+
+    -w | --window)
+        window_idx="$2"
+        shift # shifts arguments $2 -> $1, $3 -> $2, ...
+        if [[ -z "$window_idx" || "$window_idx" -lt 0 ]]; then
+            echo "Error: Invalid window index. Please provide an positive integer index."
+            exit 1
+        fi
+        ;;
+
+    -k | --kill-window)
+        kill=$(tmux display-message -p '#S:#I')
+        ;;
+        
+    *) # any other input
+        echo "Error: Invalid option."
+        exit 1
+        ;;
+
+    esac
+    shift # shifts arguments $2 -> $1, $3 -> $2, ...
+done
+
+go_to_session() {
+    if ! tmux has-session -t $session_idx 2>/dev/null; then
+        # create this tmux session because it does not exist.
+        tmux new-session -ds $session_idx -c ${HARPOON_PATHS[$session_idx]}
+        # load virtual environment only if the session does not exist.
+        venv="${HARPOON_VENVS[$session_idx]}"
+        if ! [[ -z $venv ]]; then
+            # run the specific command on window 0 of the particular session. C-m = Enter key.
+            tmux send-keys -t $session_idx:0 "activate $venv" C-m
+            tmux send-keys -t $session_idx:0 "clear" C-m
+        fi
+    fi
+
+    if [[ -z $TMUX ]]; then
+        tmux attach-session -t $session_idx:0  # attach works outside tmux.
+    else
+        tmux switch-client -t $session_idx:0  # switch works inside tmux.
+    fi
+}
+
+find_dirs() {
+    # prints all the directories so that they can be then passed to fzf.
+    for i in "${!FZF_PATHS[@]}"; do
+        path=${FZF_PATHS[i]}
+        depth=${FZF_DEPTHS[i]}
+        [[ -d "$path" ]] && find "$path" -mindepth 1 -maxdepth "${depth}" -path '*/.git' -prune -o -type d -print
+    done
+}
+
+fzf_session() {
+    # run fzf in current window
+    if [[ -z $TMUX ]]; then
+        tmux set-option status off
+    fi
+    dir=$(find_dirs | fzf)
+    if [[ -z $TMUX ]]; then
+        tmux set-option status on
+    fi
+
+    # if no item is selected in fzf, exit
+    if [[ -z $dir ]]; then
+        return 0
+    fi
+
+    name=$(basename $dir)
+
+    if ! tmux has-session -t $name 2>/dev/null; then
+        # create this tmux session because it does not exist.
+        tmux new-session -ds $name -c $dir
+    fi
+
+    if [[ -z $TMUX ]]; then
+        tmux attach-session -t $name:0  # attach works outside tmux.
+    else
+        tmux switch-client -t $name:0  # switch works inside tmux.
+    fi
+}
+
+open_window() {
+    # create new window in current session if it does not exist and load the
+    # same virtual environment as the original window.
+    if ! tmux list-windows -F '#I' | grep -q "^$window_idx$"; then
+        venv=$VIRTUAL_ENV
+        tmux new-window -t :$window_idx
+        if ! [[ -z $venv ]]; then
+            tmux send-keys -t :$window_idx "source ${venv}/bin/activate" C-m
+            tmux send-keys -t :$window_idx "clear" C-m
+        fi
+    fi
+    
+    # switch to that window
+    tmux select-window -t :$window_idx
+}
+
+# run the correct function
+case "$mode" in
+"session")
+    if [[ -z $session_idx ]]; then
+        echo "Error: Session index required for mode == 'session'."
+        exit 1
+    fi
+
+    go_to_session
+    ;;
+
+"fzf")
+    fzf_session
+    ;;
+
+"window")
+    if [[ -z $window_idx ]]; then
+        echo "Error: Window index required for mode == 'window'."
+        exit 1
+    fi
+
+    open_window
+    ;;
+
+esac
+
+if ! [[ -z kill ]]; then
+    # this is useful for the keybinds, which require 'tmux neww' so that the focus changes to the new window,
+    # then this new window is killed as it is not necessary and only used as a tool to run this program.
+    tmux kill-window -t $kill
+fi

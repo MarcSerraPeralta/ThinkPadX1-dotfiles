@@ -163,7 +163,7 @@ for_window [class="firefox"] fullscreen enable
 
 # launch applications on specific workspaces on startup
 # # launch terminal with tmux on workspace 1 
-exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal -- bash -c "tmux"'
+exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal -- bash -c "tmux new-session -t 99"'
 # # launch firefox on workspace 2 in full screen (sleep to wait until the terminal is open)
 exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/firefox'
 exec --no-startup-id sh -c 'sleep 0.1 && i3-msg "workspace 1"'
