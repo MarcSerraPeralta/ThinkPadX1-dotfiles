@@ -170,7 +170,6 @@ open_window() {
         venv=""
         if ! [[ -z $venv_window_idx ]]; then
             venv=$(tmux show-window-options -t :$venv_window_idx -v @virtual_env)
-            echo "$venv_window_idx $venv" > log.txt
         fi
         tmux new-window -t :$window_idx
         if ! [[ -z $venv ]]; then
