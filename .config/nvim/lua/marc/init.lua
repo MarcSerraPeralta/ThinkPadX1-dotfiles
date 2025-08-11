@@ -71,7 +71,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("i", "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-        vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float(nil, {
+        vim.keymap.set("n", "<leader>d", function() vim.diagnostic.open_float(nil, {
             focusable = false, scope = "line",
             }) end, {desc = "Show diagnostics for the current line" })
         vim.keymap.set("v", "<Leader>ff", function()
