@@ -1,0 +1,17 @@
+[user]
+	email = marcserraperalta@gmail.com
+	name = MarcSerraPeralta
+[push]
+	autoSetupRemote = true
+[alias]
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    mergemain = merge main --allow-unrelated-histories
+    mm = merge main --allow-unrelated-histories
+    wa = worktree add
+    wr = worktree remove
+    empty-tree = "!git checkout $(git commit-tree $(git hash-object -t tree /dev/null) < /dev/null)"

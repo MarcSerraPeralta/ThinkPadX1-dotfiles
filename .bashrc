@@ -167,3 +167,6 @@ activate() {
         return 1
     fi
 }
+
+# git completion
+source ~/.git-completion.bash
