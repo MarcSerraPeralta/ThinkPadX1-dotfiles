@@ -4,8 +4,8 @@
 # # harpoon paths specify which project is loaded when 'mode = session', and
 # # harpoon venvs specify which virtual environment to load (if needed).
 # # items must be separated by spaces.
-export HARPOON_PATHS=("$HOME/usuari/repositories/surface-sim" "$HOME")
-export HARPOON_VENVS=("surface-sim" "")
+export HARPOON_PATHS=("$HOME/usuari/repositories/surface-sim" "$HOME/usuari/repositories/qec-util" "$HOME" )
+export HARPOON_VENVS=("surface-sim" "qec-util" "")
 # # fzf paths specify which directories to search for projects, and 
 # # fzf depths specify the depth shown in the fzf.
 # # items must be separated by spaces.

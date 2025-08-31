@@ -73,6 +73,7 @@ no_focus [title="^Peek preview$"]
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym Control+Mod1+t exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
