@@ -40,6 +40,14 @@ This means that the battery-notification script will run every 3 minutes.
 The reason for not using `$HOME` is that cron does not have all the environment variables loaded up. 
 For this reason, you must also check the `battery_notifications` script and update any environment variables present there.
 
+**5.** Install the following plugins in Mozilla Firefox:
+- uBlock origin
+- Dark reader
+- Google Scholar
+- Grammarly
+- Firefox Color
+
+
 # Choice explanation
 
 Most of my choices are based on the setup from ThePrimeagen (e.g. see [this video](https://www.youtube.com/watch?v=bdumjiHabhQ&t=316s)). 
