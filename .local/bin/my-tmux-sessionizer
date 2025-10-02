@@ -149,16 +149,20 @@ fzf_session() {
     fi
 
     name=$(basename $dir)
+    # tmux replaces the "." by "_" in the session names, so
+    # it complains that it cannot find the created session because
+    # one has dots and the other one has underscores
+    tmux_name=$(echo "$name" | tr '.' '_')
 
-    if ! tmux has-session -t $name 2>/dev/null; then
+    if ! tmux has-session -t $tmux_name 2>/dev/null; then
         # create this tmux session because it does not exist.
-        tmux new-session -ds $name -c $dir
+        tmux new-session -ds $tmux_name -c $dir
     fi
 
     if [[ -z $TMUX ]]; then
-        tmux attach-session -t $name:0  # attach works outside tmux.
+        tmux attach-session -t $tmux_name:0  # attach works outside tmux.
     else
-        tmux switch-client -t $name:0  # switch works inside tmux.
+        tmux switch-client -t $tmux_name:0  # switch works inside tmux.
     fi
 }
 
