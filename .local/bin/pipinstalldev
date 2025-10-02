@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+# install the dev requirements using the 'requirements_dev.txt' instead of
+# 'pip install -e .[dev]' because the '[dev]' ones are not usually pinned to
+# an specific version
+pip install -r requirements_dev.txt
+pip install -e .

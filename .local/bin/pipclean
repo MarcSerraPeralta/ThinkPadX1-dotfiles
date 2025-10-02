@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+# 'pip freeze' has problems if modules are installed in editable mode
+# or from github/gitlab
+pip list --format=freeze > /tmp/requirements.txt
+# remove basic packages from the deinstallation file
+# the double '' after '-i' is specific for macOS
+sed -i '/^pip=/d' /tmp/requirements.txt
+sed -i '/^setuptools=/d' /tmp/requirements.txt
+sed -i '/^wheel=/d' /tmp/requirements.txt
+pip uninstall -y -r /tmp/requirements.txt
