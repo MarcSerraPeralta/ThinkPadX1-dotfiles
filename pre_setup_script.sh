@@ -79,6 +79,9 @@ sudo apt install scrot
 # install tmux
 sudo apt install tmux
 
+# install eduVPN
+python3 -m pip install eduvpn-client
+
 if [ REBOOT ]; then
   sudo reboot
 fi
