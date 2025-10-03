@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=eduVPN
+Comment=Access your institute's network
+Exec=/home/marc/.local/bin/eduvpn-gui
+Icon=/home/marc/.local/share/icons/eduvpn.png
+Terminal=false
+Type=Application
+Categories=Utility;
