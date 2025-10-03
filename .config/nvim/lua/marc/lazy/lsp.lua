@@ -13,7 +13,7 @@ return {
         capabilities.positionEncoding = "utf-8" -- basedpyright uses utf16 by default
 
         -- LSP for python
-        require("lspconfig").basedpyright.setup({
+        vim.lsp.config("basedpyright", {
             capabilities = capabilities,
             settings = {
                 basedpyright = {
@@ -25,6 +25,7 @@ return {
                 },
             },
         })
+        vim.lsp.enable("basedpyright")
 
         -- autocompletion based on the LSP
         local cmp = require("cmp")
@@ -41,13 +42,14 @@ return {
         })
 
         -- ruff linter and formatter for python (do not use for diagnosis)
-        require("lspconfig").ruff.setup({
+        vim.lsp.config("ruff", {
             capabilities = capabilities,
             on_attach = function(client, bufnr)
                 -- Disable all diagnostics from ruff
                 client.server_capabilities.diagnosticProvider = false
             end,
         })
+        vim.lsp.enable("ruff")
 
         -- configure LSP behavior and visualization
         vim.diagnostic.config({

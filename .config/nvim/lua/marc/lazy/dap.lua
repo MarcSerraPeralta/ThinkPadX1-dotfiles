@@ -3,7 +3,10 @@ return {
     dependencies = {
   	    "nvim-neotest/nvim-nio",
         "rcarriga/nvim-dap-ui",
-        "mfussenegger/nvim-dap-python",
+        {
+            "mfussenegger/nvim-dap-python",
+            build = "", -- disables luarocks, installs from GitHub instead
+        },        
         "theHamsta/nvim-dap-virtual-text",
     },
     config = function()
