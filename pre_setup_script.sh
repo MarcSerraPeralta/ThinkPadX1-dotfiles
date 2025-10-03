@@ -69,7 +69,8 @@ deactivate
 cd $PWD
 
 # install fzf to fuzzy-find in the command line
-sudo apt install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 # requirements for the script to lock the screen with i3lock
 sudo apt install xss-lock

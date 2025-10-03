@@ -133,10 +133,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -f ~/.fzf-completion.bash ]; then
-    source ~/.fzf-completion.bash 
-fi
-
 # neovim
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
@@ -170,3 +166,8 @@ activate() {
 
 # git completion
 source ~/.git-completion.bash
+
+# fzf completion
+if [ -f ~/.fzf.bash ]; then
+    source ~/.fzf.bash 
+fi
