@@ -1,7 +1,7 @@
 -- fat cursor in insert mode
 vim.opt.guicursor = ""
 
--- activate line numbers and make then relative
+-- activate line numbers and make them relative
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -39,6 +39,7 @@ vim.opt.updatetime = 50
 
 -- add line at 80 characters
 vim.opt.colorcolumn = "80"
+-- the color of the column is defined inside the tokyonight colorscheme
 
 -- make neovim use the system's clipboard
 -- vim.opt.clipboard = "unnamedplus"

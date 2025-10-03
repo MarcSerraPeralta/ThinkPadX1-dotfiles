@@ -14,6 +14,7 @@ return {
               -- hl["@keyword.exception"] = { fg = c.yellow }
               -- hl["@function.builtin"] = { fg = c.yellow }
               hl["@keyword.operator"] = { fg = "#bb9af7", italic = false }
+              hl.ColorColumn = { bg = "#20222e" }
             end,
         },
     },
