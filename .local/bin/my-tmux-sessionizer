@@ -12,6 +12,10 @@ export HARPOON_VENVS=("surface-sim" "qec-util" "")
 export FZF_PATHS=("$HOME/usuari/repositories" "$HOME/usuari/projects")
 export FZF_DEPTHS=(1 1)
 
+# make the fzf command visible in this script because new tmux sessions may
+# not have the bash profile loaded.
+export PATH="$PATH:/home/marc/.fzf/bin"
+
 # initial checks
 # # check that fzf and tmux are installed
 command -v fzf >/dev/null || echo "Error: fzf command is missing"
