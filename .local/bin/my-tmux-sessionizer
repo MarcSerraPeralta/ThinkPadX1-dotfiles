@@ -109,22 +109,29 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 go_to_session() {
-    if ! tmux has-session -t $session_idx 2>/dev/null; then
+    # use the same names for the sessions as the 'fzf' ones so that the
+    # 'session' and 'fzf' modes lead to the same tmux sessions and not different ones.
+    name=$(basename ${HARPOON_PATHS[$session_idx]})
+    # tmux replaces the "." by "_" in the session names, so
+    # it complains that it cannot find the created session because
+    # one has dots and the other one has underscores
+    tmux_name=$(echo "$name" | tr '.' '_')
+    if ! tmux has-session -t $tmux_name 2>/dev/null; then
         # create this tmux session because it does not exist.
-        tmux new-session -ds $session_idx -c ${HARPOON_PATHS[$session_idx]}
+        tmux new-session -ds $tmux_name -c ${HARPOON_PATHS[$session_idx]}
         # load virtual environment only if the session does not exist.
         venv="${HARPOON_VENVS[$session_idx]}"
         if ! [[ -z $venv ]]; then
             # run the specific command on window 0 of the particular session. C-m = Enter key.
-            tmux send-keys -t $session_idx:0 "activate $venv" C-m
-            tmux send-keys -t $session_idx:0 "clear" C-m
+            tmux send-keys -t $tmux_name:0 "activate $venv" C-m
+            tmux send-keys -t $tmux_name:0 "clear" C-m
         fi
     fi
 
     if [[ -z $TMUX ]]; then
-        tmux attach-session -t $session_idx:0  # attach works outside tmux.
+        tmux attach-session -t $tmux_name:0  # attach works outside tmux.
     else
-        tmux switch-client -t $session_idx:0  # switch works inside tmux.
+        tmux switch-client -t $tmux_name:0  # switch works inside tmux.
     fi
 }
 
