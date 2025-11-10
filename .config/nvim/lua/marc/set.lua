@@ -43,3 +43,16 @@ vim.opt.colorcolumn = "80"
 
 -- make neovim use the system's clipboard
 -- vim.opt.clipboard = "unnamedplus"
+
+-- hide ./ and ../ entries in netrw (explorer view)
+vim.g.netrw_list_hide = "^\\./$,^\\.\\./$"
+vim.g.netrw_hide = 1
+
+-- show relative line numbers in netrw
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "netrw",
+    callback = function()
+        vim.opt_local.number = true
+        vim.opt_local.relativenumber = true
+    end,
+})
