@@ -41,11 +41,12 @@ The reason for not using `$HOME` is that cron does not have all the environment 
 For this reason, you must also check the `battery_notifications` script and update any environment variables present there.
 
 **5.** Install the following plugins in Mozilla Firefox:
-- uBlock origin
+- uBlock Origin
 - Dark reader
 - Google Scholar
 - Grammarly
 - Firefox Color
+- Control Panel for YouTube
 
 
 # Choice explanation
