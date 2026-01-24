@@ -1,16 +1,12 @@
 #!/usr/bin/bash
 
 # custom parameters 
-# # harpoon paths specify which project is loaded when 'mode = session', and
-# # harpoon venvs specify which virtual environment to load (if needed).
-# # items must be separated by spaces.
-export HARPOON_PATHS=("$HOME/usuari/repositories/surface-sim" "$HOME/usuari/repositories/qec-util" "$HOME" )
-export HARPOON_VENVS=("surface-sim" "qec-util" "")
 # # fzf paths specify which directories to search for projects, and 
 # # fzf depths specify the depth shown in the fzf.
 # # items must be separated by spaces.
 export FZF_PATHS=("$HOME/usuari/repositories" "$HOME/usuari/projects")
 export FZF_DEPTHS=(1 1)
+export FZF_SPECIFIC_DIRS=("$HOME")
 
 # make the fzf command visible in this script because new tmux sessions may
 # not have the bash profile loaded.
@@ -21,21 +17,14 @@ export PATH="$PATH:/home/marc/.fzf/bin"
 command -v fzf >/dev/null || echo "Error: fzf command is missing"
 command -v tmux >/dev/null || echo "Error: tmux command is missing"
 
-# # check that HARPOON_PATHS and HARPOON_VENVS have the same lenght
-if [[ ${#HARPOON_PATHS[@]} -ne ${#HARPOON_VENVS[@]} ]]; then
-    echo "Error: Harpoon arrays have different lengths."
-    exit 1
-fi
-
 # # check that FZF_PATHS and FZF_DEPTHS have the same lenght
 if [[ ${#FZF_PATHS[@]} -ne ${#FZF_DEPTHS[@]} ]]; then
-    echo "Error: Fzf arrays have different lengths."
+    echo "Error: fzf arrays have different lengths."
     exit 1
 fi
 
 # process the given inputs/arguments to my-tmux-sessionizer
 mode=""
-session_idx=""
 window_idx=""
 kill=""
 venv_window_idx=""
@@ -47,8 +36,7 @@ while [[ "$#" -gt 0 ]]; do
         echo "Options:"
         echo "  -h, --help             Display this help message."
         echo "  -m, --mode <name>      Mode to execute this program."
-        echo "                         Available modes are: 'fzf', 'session', 'window'."
-        echo "  -s, --session <name>   Session command index."
+        echo "                         Available modes are: 'fzf', 'window'."
         echo "  -w, --window <name>    Window command index." 
         echo "  -k, --kill-window      Kill window where this program was called."
         echo "  --venv-window          Load venv from specified window when mode = 'window'."
@@ -62,17 +50,8 @@ while [[ "$#" -gt 0 ]]; do
             echo "Error: Mode option cannot be empty."
             exit 1
         fi
-        if ! [[ "$mode"=="fzf" || "$mode"=="session" || "$mode"=="window" ]]; then
-            echo "Error: Mode option must be 'fzf', 'session', or 'window'."
-            exit 1
-        fi
-        ;;
-
-    -s | --session)
-        session_idx="$2"
-        shift # shifts arguments $2 -> $1, $3 -> $2, ...
-        if [[ -z "$session_idx" || "$session_idx" -lt 0 || "$session_idx" -ge "${#HARPOON_PATHS[@]}" ]]; then
-            echo "Error: Invalid session index. Please provide an index between 0 and $((${#HARPOON_PATHS[@]} - 1))."
+        if ! [[ "$mode"=="fzf" || "$mode"=="window" ]]; then
+            echo "Error: Mode option must be 'fzf', or 'window'."
             exit 1
         fi
         ;;
@@ -108,34 +87,11 @@ while [[ "$#" -gt 0 ]]; do
     shift # shifts arguments $2 -> $1, $3 -> $2, ...
 done
 
-go_to_session() {
-    # use the same names for the sessions as the 'fzf' ones so that the
-    # 'session' and 'fzf' modes lead to the same tmux sessions and not different ones.
-    name=$(basename ${HARPOON_PATHS[$session_idx]})
-    # tmux replaces the "." by "_" in the session names, so
-    # it complains that it cannot find the created session because
-    # one has dots and the other one has underscores
-    tmux_name=$(echo "$name" | tr '.' '_')
-    if ! tmux has-session -t $tmux_name 2>/dev/null; then
-        # create this tmux session because it does not exist.
-        tmux new-session -ds $tmux_name -c ${HARPOON_PATHS[$session_idx]}
-        # load virtual environment only if the session does not exist.
-        venv="${HARPOON_VENVS[$session_idx]}"
-        if ! [[ -z $venv ]]; then
-            # run the specific command on window 0 of the particular session. C-m = Enter key.
-            tmux send-keys -t $tmux_name:0 "activate $venv" C-m
-            tmux send-keys -t $tmux_name:0 "clear" C-m
-        fi
-    fi
-
-    if [[ -z $TMUX ]]; then
-        tmux attach-session -t $tmux_name:0  # attach works outside tmux.
-    else
-        tmux switch-client -t $tmux_name:0  # switch works inside tmux.
-    fi
-}
-
 find_dirs() {
+    # prints the specific paths
+    for path in "${FZF_SPECIFIC_DIRS[@]}"; do
+        [[ -d "$path" ]] && printf '%s\n' "$path"
+    done
     # prints all the directories so that they can be then passed to fzf.
     for i in "${!FZF_PATHS[@]}"; do
         path=${FZF_PATHS[i]}
@@ -149,7 +105,7 @@ fzf_session() {
     if [[ -z $TMUX ]]; then
         tmux set-option status off
     fi
-    dir=$(find_dirs | fzf --color=bg:#1c1c1c)  # this is my terminal background (which does not correctly load)
+    dir=$(find_dirs | sort -u | fzf --color=bg:#1c1c1c)  # this is my terminal background (which does not correctly load)
     if [[ -z $TMUX ]]; then
         tmux set-option status on
     fi
@@ -209,15 +165,6 @@ open_window() {
 
 # run the correct function
 case "$mode" in
-"session")
-    if [[ -z $session_idx ]]; then
-        echo "Error: Session index required for mode == 'session'."
-        exit 1
-    fi
-
-    go_to_session
-    ;;
-
 "fzf")
     fzf_session
     ;;
