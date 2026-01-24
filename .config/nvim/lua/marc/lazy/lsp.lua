@@ -21,6 +21,10 @@ return {
                     analysis = {
                         exclude = { "**/*.ipynb" },
                         diagnosticMode = "workspace", -- scans the whole workspace
+                        diagnosticSeverityOverrides = {
+                            reportImplicitStringConcatenation = "none",
+                            reportUnnecessaryIsInstance = "none",
+                        },
                     },
                 },
             },
