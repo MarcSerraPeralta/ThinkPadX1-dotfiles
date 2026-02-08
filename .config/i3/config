@@ -64,8 +64,12 @@ for_window [class="^.*"] border pixel 3
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# When a floating window is created, center it and set its size to 80% of the screen size
-for_window [floating] resize set 80 ppt 80 ppt, move position center
+# When a floating window is created, center it and set its size to 80% of the screen size,
+# except for the calculator
+for_window [floating title="^(?!Calculator$).*"] resize set 80 ppt 80 ppt, move position center
+
+# Always set the Calculator window as a floating window
+for_window [title="Calculator"] floating enable, resize set 400 600, move position center
 
 # Wallpaper
 exec --no-startup-id feh --bg-scale ~/.config/backgrounds/dark_macos_style.jpg
