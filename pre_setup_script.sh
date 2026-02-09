@@ -85,6 +85,9 @@ python3 -m pip install eduvpn-client
 # remove asterisks when typing passwords in terminal
 sudo mv /etc/sudoers.d/0pwfeedback /etc/sudoers.d/0pwfeedback.disabled 
 
+# install autorandr for automatic managing of the monitors
+sudo apt install autorandr
+
 if [ REBOOT ]; then
   sudo reboot
 fi

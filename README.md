@@ -48,6 +48,11 @@ For this reason, you must also check the `battery_notifications` script and upda
 - Firefox Color
 - Control Panel for YouTube
 
+**6.** Set up the monitor configurations in `autorandr` for automatic detection using
+```
+autorandr --save <name>
+```
+
 
 # Choice explanation
 

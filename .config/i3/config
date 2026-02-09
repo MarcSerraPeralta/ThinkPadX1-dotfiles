@@ -31,7 +31,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3lock/locking_
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-bindsym $mod+x exec --no-startup-id ~/.config/i3lock/locking_script.sh
+bindsym $mod+x exec --no-startup-id ~/.config/i3lock/locking_script.sh manual
+
+# Ensure displays are set correctly on startup or reload
+exec_always --no-startup-id autorandr --change
 
 # The Ctrl+Alt+End keybind to shutdown the computer does not seem to work on my Cinnamon
 bindsym Control+Mod1+End exec --no-startup-id shutdown -h now
