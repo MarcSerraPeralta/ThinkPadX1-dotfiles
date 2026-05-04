@@ -48,6 +48,11 @@ For this reason, you must also check the `battery_notifications` script and upda
 - Firefox Color
 - Control Panel for YouTube
 
+To have custom keywords that, when typed to the top bar, go to a desired website,
+perform the following steps:
+1. Bookmark the website
+1. Set a keyword for the website inside the Bookmark manager.
+
 **6.** Set up the monitor configurations in `autorandr` for automatic detection using
 ```
 autorandr --save <name>
