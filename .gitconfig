@@ -3,6 +3,7 @@
 	name = MarcSerraPeralta
 [push]
 	autoSetupRemote = true
+	default = current
 [alias]
     st = status
     ci = commit
