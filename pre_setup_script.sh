@@ -88,6 +88,10 @@ sudo mv /etc/sudoers.d/0pwfeedback /etc/sudoers.d/0pwfeedback.disabled
 # install autorandr for automatic managing of the monitors
 sudo apt install autorandr
 
+# install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+
 if [ REBOOT ]; then
   sudo reboot
 fi
