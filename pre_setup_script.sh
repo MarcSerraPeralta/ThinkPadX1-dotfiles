@@ -91,6 +91,9 @@ sudo apt install autorandr
 # install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
+# install element (for matrix)
+sudo apt install element-desktop
+
 
 if [ REBOOT ]; then
   sudo reboot
