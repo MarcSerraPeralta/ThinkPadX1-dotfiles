@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+mapfile -t profiles < <(autorandr | awk '{print $1}')
+
+current=$(autorandr --current)
+
+for i in "${!profiles[@]}"; do
+    if [[ "${profiles[$i]}" == "$current" ]]; then
+        next=$(( (i + 1) % ${#profiles[@]} ))
+        autorandr --load "${profiles[$next]}"
+        exit
+    fi
+done
+
+# in case the current configuration has not been stored
+autorandr --load "${profiles[0]}"

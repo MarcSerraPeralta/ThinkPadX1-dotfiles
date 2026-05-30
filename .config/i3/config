@@ -35,6 +35,8 @@ bindsym $mod+x exec --no-startup-id ~/.config/i3lock/locking_script.sh manual
 
 # Ensure displays are set correctly on startup or reload
 exec_always --no-startup-id autorandr --change
+# Add shortcut for cycling through display configurations
+bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/autorandr-cycle
 
 # The Ctrl+Alt+End keybind to shutdown the computer does not seem to work on my Cinnamon
 bindsym Control+Mod1+End exec --no-startup-id shutdown -h now
