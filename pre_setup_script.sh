@@ -94,6 +94,15 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # install element (for matrix)
 sudo apt install element-desktop
 
+# set up correctly the audio sound for docking station
+# 1. install the displaylink driver from https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu
+# 2. reboot the computer
+# 3. open pusleaudio and go to the configuration tab
+# 4. connect to the docking station
+# 5. Select "Digital stereo HDMI + Analog stereo input" for the "Built-in Audio"
+# 6. go to the Input devices tab and mute the docking station one and set the built-in one as fallback
+# 7. go to the Output devices tab and mute the docking station one and set the built-in (HDMI) one as fallback
+
 
 if [ REBOOT ]; then
   sudo reboot
