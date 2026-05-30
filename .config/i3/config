@@ -31,7 +31,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3lock/locking_
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-bindsym $mod+x exec --no-startup-id ~/.config/i3lock/locking_script.sh manual
+bindsym $mod+x exec --no-startup-id ~/.config/i3lock/locking_script.sh
 
 # Ensure displays are set correctly on startup or reload
 exec_always --no-startup-id autorandr --change
