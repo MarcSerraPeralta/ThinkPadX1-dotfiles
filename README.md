@@ -60,6 +60,7 @@ perform the following steps:
 ```
 autorandr --save <name>
 ```
+Use `Super + d` to switch between the saved configurations.
 
 
 # Choice explanation
@@ -88,7 +89,7 @@ If I want to have "split" mode, I will do it with `i3`.
 The reason is that I prefer to keep all the "window/pane" managing at the level of `i3`, 
 and not have a mix between `i3` and `tmux` because it is very likely to lead to confusion. 
 
-**Editor** - `Neovim`: once you learn the Vim motions, you can be very fast editing files and 
+**Editor** - `neovim`: once you learn the Vim motions, you can be very fast editing files and 
 without any overhead that comes with fully-fledged IDEs. I use it because it is keyboard-oriented (again), 
 Vim is the default editor on clusters (so I already know how to use it), 
 and it runs on a terminal so it can be managed by `tmux`. 
@@ -102,6 +103,13 @@ it is easier to customize (with Lua).
 
 **Window Switcher/Launcher** - `rofi`: it is like the macOS spotlight bar, 
 which is very useful for starting programs or managing the clipboard.
+_Access it with: `Alt + Space`_
 
 **Clipboard Manager** - `greenclip`: it has all the functionality that I want 
 (i.e. select previous copied text) and can be integrated with `rofi`.
+_Access it with: `Super + C`_
+
+**Open links from terminal** - `tmux-fingers`: it is a tmux plugin to highlight
+the links in the terminal and to open or copy them. Useful for git PRs.
+_Access it with: `(Ctl + a) + (F) + (Ctl + a-z)`_
+
