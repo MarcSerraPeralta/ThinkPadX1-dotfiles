@@ -76,8 +76,9 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 sudo apt install xss-lock
 sudo apt install scrot
 
-# install tmux
+# install tmux and tmux-plugins
 sudo apt install tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # install eduVPN
 python3 -m pip install eduvpn-client

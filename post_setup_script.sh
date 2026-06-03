@@ -2,3 +2,6 @@ chmod +x $HOME/.local/bin/battery_notifications
 chmod +x .config/i3lock/locking_script.sh 
 chmod +x $HOME/.local/share/applications/eduVPN.desktop
 chmod +x $HOME/.local/bin/autorandr-cycle
+
+# install tmux plugins
+tmux source ~/.tmux.conf
