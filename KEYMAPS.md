@@ -25,6 +25,7 @@ List of custom and/or useful keymaps.
 - `Super + Shift + R` - reload i3 config
 
 ### terminal
+- `Ctl + r` - fuzzy find command in history
 - `Alt + f` - fuzzy find and open project
 - `Alt + j/k/l/ñ` - switch to different terminla inside same project
 - `(Ctl + a) + (F) + (a-z)` - copy highlighted link
@@ -40,4 +41,9 @@ List of custom and/or useful keymaps.
 - `Space + d` - show diagnostics of current line
 - `Ctl + n` - next option from predictions
 - `Ctl + p` - previous option from predictions
+- `Space + pf` - fuzzy find for files
+- `Space + pv` - open file/directory explorer mode
+- `Space + ff` - formats selected lines or whole file
+- `Ctl + s` - shows function signature (in insert mode)
+- `Space + u` - open undo tree
 
