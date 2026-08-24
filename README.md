@@ -50,6 +50,7 @@ For this reason, you must also check the `battery_notifications` script and upda
 - Grammarly
 - Firefox Color
 - Control Panel for YouTube
+- Sponsorblock
 
 To have custom keywords that, when typed to the top bar, go to a desired website,
 perform the following steps:
