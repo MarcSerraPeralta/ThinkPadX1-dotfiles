@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>d", function() vim.diagnostic.open_float(nil, {
             focusable = false, scope = "line",
             }) end, {desc = "Show diagnostics for the current line" })
-        vim.keymap.set("v", "<Leader>ff", function()
+        vim.keymap.set("v", "<leader>ff", function()
             vim.lsp.buf.format({ range = {
                 ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
                 ["end"]   = vim.api.nvim_buf_get_mark(0, ">"),

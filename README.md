@@ -49,7 +49,9 @@ For this reason, you must also check the `battery_notifications` script and upda
 - Google Scholar
 - Grammarly
 - Firefox Color
-- Control Panel for YouTube
+- Control Panel for YouTube (e.g. removes Shorts)
+- SponsorBlock - Skip Sponsorships on YouTube
+- Consent-O-Matic (rejects cookies automatically)
 
 To have custom keywords that, when typed to the top bar, go to a desired website,
 perform the following steps:
